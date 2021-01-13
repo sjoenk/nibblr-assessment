@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Helpers\Validators\RegistrationValidator;
+use App\Helpers\Validators\LoginValidator;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -13,7 +14,7 @@ class AuthController extends Controller
     {
         
         $validatedData = (new RegistrationValidator())->validate($request);
-        
+
         $validatedData['password'] = bcrypt($request->password);
 
         $user = User::create($validatedData);

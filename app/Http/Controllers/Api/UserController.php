@@ -20,7 +20,6 @@ class UserController extends Controller
     }
 
     private function getUserId() {
-        return 1;
         //return auth()->user()->id;
     }
 
@@ -31,9 +30,9 @@ class UserController extends Controller
     public function update(Request $request) {
         $user = User::findOrFail($this->getUserId());
         $validatedData = (new UserDataValidator())->validate($request);
-        $user->firstName = $request->firstName;
-        $user->lastName = $request->lastName;
-        $user->bio = $request->bio;
+        $user["first_name"] = $request["first_name"];
+        $user["last_name"] = $request["last_name"];
+        $user["bio"] = $request["bio"];
         $user->save();
         return new UserResource($user);
     }
