@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
@@ -18,6 +19,12 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name', 'last_name', 'bio', 'email', 'password',
     ];
+
+
+    public function address() {
+        return $this->belongsTo("App\Models\Address");
+    }
+
 
     /**
      * The attributes that should be hidden for arrays.

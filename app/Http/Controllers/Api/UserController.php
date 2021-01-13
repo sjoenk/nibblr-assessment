@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 
 use App\Helpers\Validators\UserDataValidator;
+use App\Helpers\Validators\AddressValidator;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ class UserController extends Controller
     }
 
     private function getUserId() {
+        return 1;
         //return auth()->user()->id;
     }
 
@@ -29,11 +31,10 @@ class UserController extends Controller
 
     public function update(Request $request) {
         $user = User::findOrFail($this->getUserId());
+        $addressData = $request["address"];
         $validatedData = (new UserDataValidator())->validate($request);
-        $user["first_name"] = $request["first_name"];
-        $user["last_name"] = $request["last_name"];
-        $user["bio"] = $request["bio"];
-        $user->save();
+        $user->update($validatedData);
+        $user->address->update($addressData);
         return new UserResource($user);
     }
 
