@@ -31,6 +31,13 @@ class CreateDinnersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
         });
+
+        Schema::create('dinner_user', function (Blueprint $table) {
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedInteger('dinner_id');
+            $table->foreign('dinner_id')->references('id')->on('dinners');
+        });
     }
 
     /**

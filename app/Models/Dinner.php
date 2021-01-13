@@ -12,6 +12,10 @@ class Dinner extends Model
         'start', 'end', 'title', 'description', 'max_members'
     ];
 
+    public function guests() {
+        return $this->belongsToMany("App\Models\User");
+    }
+
     public function address() {
         return $this->belongsTo("App\Models\Address");
     }
