@@ -33,9 +33,9 @@ class CreateDinnersTable extends Migration
         });
 
         Schema::create('dinner_user', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedInteger('dinner_id');
+            $table->bigInteger('dinner_id')->unsigned();
             $table->foreign('dinner_id')->references('id')->on('dinners');
         });
     }
@@ -48,5 +48,6 @@ class CreateDinnersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('dinners');
+        Schema::dropIfExists('dinner_user');
     }
 }

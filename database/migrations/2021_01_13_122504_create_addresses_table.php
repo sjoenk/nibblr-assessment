@@ -36,6 +36,11 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
+
+        Schema::table('users', function(Blueprint $table) {
+            $table->dropColumn('address_id');
+        });
+
         Schema::dropIfExists('addresses');
     }
 }
