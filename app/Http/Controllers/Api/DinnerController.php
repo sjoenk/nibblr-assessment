@@ -14,7 +14,7 @@ class DinnerController extends Controller
      */
     public function index()
     {
-        //
+        return Dinner
     }
 
     /**
@@ -46,7 +46,7 @@ class DinnerController extends Controller
      */
     public function show(Dinner $dinner)
     {
-        //
+        
     }
 
     /**
@@ -57,7 +57,7 @@ class DinnerController extends Controller
      */
     public function edit(Dinner $dinner)
     {
-        //
+        
     }
 
     /**
