@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Models\User;
-
 use App\Helpers\Validators\UserDataValidator;
 use App\Helpers\Validators\AddressValidator;
 
@@ -20,17 +18,12 @@ class UserController extends Controller
         //$this->middleware('auth:api');
     }
 
-    private function getUserId() {
-        return 1;
-        //return auth()->user()->id;
-    }
-
     public function show() {
-        return new UserResource(User::findOrFail($this->getUserId()));
+        return new UserResource($this->getUser());
     }
 
     public function update(Request $request) {
-        $user = User::findOrFail($this->getUserId());
+        $user = $this->getUser();
         $addressData = $request["address"];
         $validatedData = (new UserDataValidator())->validate($request);
         $user->update($validatedData);
