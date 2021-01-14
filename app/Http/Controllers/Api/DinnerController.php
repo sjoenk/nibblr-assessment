@@ -15,15 +15,17 @@ class DinnerController extends Controller
 
     public function __construct() {
         //$this->middleware('auth:api');
-        $this->middleware('auth.dinnerhost', ['only' => ['update']]);
+        $this->middleware('auth.dinnerhost', ['only' => ['update', 'destroy']]);
     }
 
-
+ 
     private function attachAddressToDinner(User $host, Dinner $dinner, Request $request) {
         $address = $host->address;
         if (isset($request["address"])) {
             $addressData = $request["address"];
-            $address = new Address($addressData);
+            $address = Address::firstOrNew([
+                'id' => $addressData['id']
+            ], $addressData);
             $address->save();
         }
         $dinner->address()->associate($address);
@@ -101,4 +103,5 @@ class DinnerController extends Controller
         $dinner->delete();
         return response(['success' => TRUE]);
     }
+    
 }
