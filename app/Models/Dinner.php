@@ -12,6 +12,12 @@ class Dinner extends Model
         'start', 'end', 'title', 'description', 'max_members'
     ];
 
+    protected $casts = [
+        'max_members' => 'integer',
+        'start' => 'datetime',
+        'end' => 'datetime'
+    ];
+
     public function guests() {
         return $this->belongsToMany("App\Models\User");
     }
@@ -21,7 +27,7 @@ class Dinner extends Model
     }
 
     public function host() {
-        return $this->belongsTo("App\Models\User");
+        return $this->belongsTo("App\Models\User", 'user_id');
     }
 
 }

@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\DinnerController;
+namespace App\Http\Controllers\Api;
 
-use App\Dinner;
+use App\Models\Dinner;
+use App\Models\User;
+use App\Models\Address;
 use App\Http\Resources\DinnerResource;
+use App\Http\Controllers\Controller;
 use App\Helpers\Validators\DinnerValidator;
 use Illuminate\Http\Request;
 
@@ -12,6 +15,7 @@ class DinnerController extends Controller
 
     public function __construct() {
         //$this->middleware('auth:api');
+        $this->middleware('auth.dinnerhost', ['only' => ['update']]);
     }
 
 
@@ -44,9 +48,9 @@ class DinnerController extends Controller
      */
     public function store(Request $request)
     {
-        (new DinnerValidator())->validate($request);
+        $validatedData = (new DinnerValidator())->validate($request);
 
-        $dinner = new Dinner($request);
+        $dinner = new Dinner($validatedData);
         $host = $this->getUser();
         $dinner->host()->associate($host);
         $this->attachAddressToDinner($host, $dinner, $request);
@@ -76,9 +80,9 @@ class DinnerController extends Controller
      */
     public function update(Request $request, Dinner $dinner)
     {
-        (new DinnerValidator())->validate($request);
+        $validatedData = (new DinnerValidator())->validate($request);
 
-        $dinner->update($request);
+        $dinner->update($validatedData);
         $host = $this->getUser();
         $this->attachAddressToDinner($host, $dinner, $request);
         $dinner->save();

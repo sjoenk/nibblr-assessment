@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\AddressResource;
 
 class DinnerResource extends JsonResource
 {
@@ -22,6 +23,7 @@ class DinnerResource extends JsonResource
             'max_members' => $this->max_members,
             'guests' => UserResource::collection($this->guests),
             'host' => new UserResource($this->host),
+            'address' => new AddressResource($this->address),
             'start' => $this->start,
             'end' => $this->end,
             'created_at' => $this->created_at,

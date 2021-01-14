@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\UserManagement;
+namespace App\Helpers;
 
 use App\Models\User;
 
