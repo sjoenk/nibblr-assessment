@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Dinner;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +22,5 @@ Route::get('/profile', 'Api\UserController@show');
 Route::put('/profile', 'Api\UserController@update');
 
 Route::apiResource('dinners', 'Api\DinnerController');
+Route::post('/dinners/{dinner}/enrollment', 'Api\DinnerEnrollmentController@registerEnrollment');
+Route::delete('/dinners/{dinner}/enrollment', 'Api\DinnerEnrollmentController@cancelEnrollment');

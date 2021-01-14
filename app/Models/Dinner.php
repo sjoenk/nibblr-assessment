@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Dinner extends Model
@@ -28,6 +29,18 @@ class Dinner extends Model
 
     public function host() {
         return $this->belongsTo("App\Models\User", 'user_id');
+    }
+
+    public function availablePlaces() {
+        return $this->max_members - $this->guests()->count() - 1;
+    }
+
+    public function isInThePast() {
+        return $this->start < new DateTime();
+    }
+
+    public function hasPlacesAvailable() {
+        return $this->availablePlaces() > 0;
     }
 
 }

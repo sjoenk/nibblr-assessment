@@ -7,7 +7,7 @@ use App\Models\User;
 trait UserManagement {
 
     protected function getUserId() {
-        return 1;
+        return 2;
     }
 
     protected function getUser() {
