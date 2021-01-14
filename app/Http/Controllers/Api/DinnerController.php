@@ -14,6 +14,17 @@ class DinnerController extends Controller
         //$this->middleware('auth:api');
     }
 
+
+    private function attachAddressToDinner(User $host, Dinner $dinner, Request $request) {
+        $address = $host->address;
+        if (isset($request["address"])) {
+            $addressData = $request["address"];
+            $address = new Address($addressData);
+            $address->save();
+        }
+        $dinner->address()->associate($address);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,16 +48,9 @@ class DinnerController extends Controller
 
         $dinner = new Dinner($request);
         $host = $this->getUser();
-
-        $address = $host->address;
-        if (isset($request["address"])) {
-            $address = new Address($addressData);
-            $address->save();
-        }
-
-
         $dinner->host()->associate($host);
-        $dinner->address()->associate($address);
+        $this->attachAddressToDinner($host, $dinner, $request);
+        $dinner->save();
 
         return new DinnerResource($dinner);
     }
@@ -72,7 +76,14 @@ class DinnerController extends Controller
      */
     public function update(Request $request, Dinner $dinner)
     {
-        //
+        (new DinnerValidator())->validate($request);
+
+        $dinner->update($request);
+        $host = $this->getUser();
+        $this->attachAddressToDinner($host, $dinner, $request);
+        $dinner->save();
+
+        return new DinnerResource($dinner);
     }
 
     /**
