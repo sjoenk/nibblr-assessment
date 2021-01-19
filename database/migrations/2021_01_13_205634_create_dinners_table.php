@@ -15,8 +15,8 @@ class CreateDinnersTable extends Migration
     {
         Schema::create('dinners', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('start');
-            $table->timestamp('end'); 
+            $table->timestamp('start')->nullable();
+            $table->timestamp('end')->nullable();
             $table->string('title');
             $table->string('description')->nullable();
             $table->tinyInteger('max_members');
