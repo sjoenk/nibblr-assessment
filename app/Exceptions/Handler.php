@@ -97,7 +97,9 @@ class Handler extends ExceptionHandler
         }
 
         $message = null;
-        if (property_exists($exception, 'original')) {
+        if (method_exists($exception, 'getMessage')) {
+            $message = $exception->getMessage();
+        } elseif (property_exists($exception, 'original')) {
             $message = $exception->original['message'];
         }
         $response = [];
