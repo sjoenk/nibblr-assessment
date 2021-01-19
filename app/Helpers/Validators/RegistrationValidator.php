@@ -13,7 +13,11 @@ class RegistrationValidator extends Validator {
             'last_name' => 'required|max:55',
             'bio' => 'max:300',
             'email' => 'email|required|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed|min:6',
+            'address.city' => 'required|string|max:255',
+            'address.postal_code' => 'required|string|max:255',
+            'address.street' => 'required|string|max:255',
+            'address.number' => 'required|string|max:255',
         ]);
         return $validatedData;
     }

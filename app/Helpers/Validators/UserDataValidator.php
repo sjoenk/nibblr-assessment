@@ -12,7 +12,13 @@ class UserDataValidator extends Validator {
         $validatedData = $request->validate([
             'first_name' => 'required|max:55',
             'last_name' => 'required|max:55',
-            'bio' => 'max:300'
+            'bio' => 'max:300',
+            'email' => 'email|unique:users,email,'.auth()->id(),
+            'password' => 'confirmed|min:6',
+            'address.city' => 'required_with:address|string|max:255',
+            'address.postal_code' => 'required_with:address|string|max:255',
+            'address.street' => 'required_with:address|string|max:255',
+            'address.number' => 'required_with:address|string|max:255',
         ]);
         return $validatedData;
     }

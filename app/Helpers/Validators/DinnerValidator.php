@@ -10,11 +10,11 @@ class DinnerValidator extends Validator {
 
     public function validate(Request $request) {
         $dinnerData = $request->validate([
-            'start' => 'required',
-            'end' => 'required',
-            'title' => 'required',
-            'description' => 'max:400',
-            'max_members' => 'required'
+            'start' => 'required|date|date_format:Y-m-d H:i:s',
+            'end' => 'required|date|date_format:Y-m-d H:i:s',
+            'title' => 'required|string',
+            'description' => 'max:400|string',
+            'max_members' => 'required|numeric'
         ]);
         return $dinnerData;
     }
