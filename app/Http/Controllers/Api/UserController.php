@@ -23,11 +23,13 @@ class UserController extends Controller
     }
 
     public function update(Request $request) {
-        $addressData = $request["address"];
         $user = auth()->user();
         $validatedData = (new UserDataValidator())->validate($request);
         $user->update($validatedData);
-        $user->address->update($addressData);
+        if (key_exists('address', $validatedData)) {
+            $addressData = $validatedData["address"];
+            $user->address->update($addressData);
+        }
         return new UserResource($user);
     }
 
