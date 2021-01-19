@@ -53,7 +53,7 @@ class DinnerController extends Controller
         $validatedData = (new DinnerValidator())->validate($request);
 
         $dinner = new Dinner($validatedData);
-        $host = $this->getUser();
+        $host = auth()->user();
         $dinner->host()->associate($host);
         $this->attachAddressToDinner($host, $dinner, $request);
         $dinner->save();
@@ -85,7 +85,7 @@ class DinnerController extends Controller
         $validatedData = (new DinnerValidator())->validate($request);
 
         $dinner->update($validatedData);
-        $host = $this->getUser();
+        $host = auth()->user();
         $this->attachAddressToDinner($host, $dinner, $request);
         $dinner->save();
 

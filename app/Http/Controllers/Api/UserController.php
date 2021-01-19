@@ -19,12 +19,12 @@ class UserController extends Controller
     }
 
     public function show() {
-        return new UserResource($this->getUser());
+        return new UserResource(auth()->user());
     }
 
     public function update(Request $request) {
-        $user = $this->getUser();
         $addressData = $request["address"];
+        $user = auth()->user();
         $validatedData = (new UserDataValidator())->validate($request);
         $user->update($validatedData);
         $user->address->update($addressData);

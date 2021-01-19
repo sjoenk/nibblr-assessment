@@ -13,7 +13,7 @@ class DinnerEnrollmentController extends Controller
     public function registerEnrollment(Dinner $dinner) {
         $inThePast = $dinner->isInThePast();
         $placesAvailable = $dinner->hasPlacesAvailable();
-        $userId = $this->getUserId();
+        $userId = auth()->id();
         $isHost = $dinner->host->id == $userId;
         $isAlreadyGuest = $dinner->guests->contains($userId);
 
@@ -33,7 +33,7 @@ class DinnerEnrollmentController extends Controller
     }
 
     public function cancelEnrollment(Dinner $dinner) {
-        $userId = $this->getUserId();
+        $userId = auth()->id();
         $isAlreadyGuest = $dinner->guests->contains($userId);
         if (!$isAlreadyGuest) {
             return response(["message" => "you were never a guest"]);
