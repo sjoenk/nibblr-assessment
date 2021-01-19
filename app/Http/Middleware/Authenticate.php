@@ -8,14 +8,16 @@ use Closure;
 
 class Authenticate extends Middleware
 {
-
-    public function handle($request, Closure $next) {
-        $user = auth()->user();
-        if ($user === null) {
-            return response('Unauthenticated user');
+    /**
+     * Get the path the user should be redirected to when they are not authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        if (!$request->expectsJson()) {
+            return route('login');
         }
-        return $next($request);
     }
-
-
 }
